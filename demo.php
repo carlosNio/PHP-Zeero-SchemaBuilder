@@ -65,7 +65,11 @@ $sql = Schema::alter('User', function (Alter $alter) {
 
 
     // add a index
-    $alter->addIndex('name_index' , 'name');
+    $alter->addIndex('index' , 'name_index' , 'name');
+    
+    // add a unique index
+    $alter->addIndex('unique' , 'unique_index' , 'name');
+    
     // drop a index
     $alter->dropIndex('name_index');
     // drop the primaryKey
