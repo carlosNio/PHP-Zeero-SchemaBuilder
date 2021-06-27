@@ -14,7 +14,7 @@ use Exception;
 class Alter
 {
 
-    
+
     /**
      * add a new table field
      *
@@ -209,6 +209,20 @@ class Alter
         $this->alter[] =  " RENAME TO {$newname}; ";
     }
 
+
+
+    /**
+     * drop a index in current table
+     *
+     * build a 'drop index' sql string
+     *
+     * @return void
+     **/
+
+    public function dropIndex(string $index)
+    {
+        $this->alter[] =  " DROP INDEX `{$index}`; ";
+    }
 
 
     /**
