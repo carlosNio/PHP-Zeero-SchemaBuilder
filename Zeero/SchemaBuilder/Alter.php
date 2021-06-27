@@ -51,8 +51,19 @@ class Alter
      * @return void
      */
 
-    public function addIndex(string $name, $column)
+    public function addIndex(string $type, string $name, $column)
     {
+        $type = strtolower($type);
+        $types = ['index', 'unique', 'fulltext', 'primary', 'spatial'];
+
+        if (!in_array($type, $types)) {
+            throw new Exception("Invalid key type: {$type}");
+        }
+
+        if (is_array($column) && $type == 'spatial') {
+            throw new Exception("index: Spatial require only one field");
+        }
+
         if (is_array($column)) {
 
             $column = array_map(function ($item) {
@@ -65,7 +76,8 @@ class Alter
         }
 
         $name = "`{$name}`";
-        $this->alter[] =  "ADD INDEX {$name} ({$column})";
+        $type = strtoupper($type);
+        $this->alter[] =  "ADD INDEX {$type} {$name} ({$column})";
     }
 
 
